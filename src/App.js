@@ -8,6 +8,9 @@ import Table from "./components/Table/Table";
 function App() {
   return (
     <ActionProvider >
+      <div className="header">
+        <div className="heading-text">Student Dashboard</div>
+      </div>
       <div className="App">
         <div className="form"><Form /></div>
         <div className="table"><Table /></div>

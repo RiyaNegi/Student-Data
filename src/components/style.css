@@ -9,6 +9,10 @@
   
 }
 
+.heading{
+    color:rgb(73, 73, 73);
+}
+
 .cols{
     display: flex;
     flex-direction: column;

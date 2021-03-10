@@ -9,6 +9,7 @@ let students = [
     stuName: "Riya Negi",
     email: "abc@gmail.com",
     batch: "BE",
+    city: "Pune",
     gender: "Female",
   }
 ]
@@ -22,12 +23,13 @@ export const ActionProvider = ({ children }) => {
     setStudentData(newStudent)
   }
 
-  const edit = (id, stuName, email, batch, gender) => {
+  const edit = (id, stuName, email, batch, city, gender) => {
     let newStudent = students.slice()
     let newchange = {
       stuName: stuName,
       email: email,
       batch: batch,
+      city: city,
       gender: gender,
       uid: id
     }
@@ -35,7 +37,6 @@ export const ActionProvider = ({ children }) => {
     newStudent[index] = newchange
     students = newStudent
     setStudentData(newStudent)
-    console.log("check del->", newStudent)
   }
 
   const deleteData = (id) => {

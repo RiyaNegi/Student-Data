@@ -14,6 +14,10 @@ import { ActionContext } from "../ActionContext";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import Form from "../Form/Form"
+import { Box, Divider } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+
+
 
 const useStyles = makeStyles({
   table: {
@@ -21,8 +25,8 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(stuName, email, batch, gender, uid) {
-  return { stuName, email, batch, gender, uid };
+function createData(stuName, email, batch, city, gender, uid) {
+  return { stuName, email, batch, city, gender, uid };
 }
 
 
@@ -31,18 +35,24 @@ const DataTable = () => {
   const action = useContext(ActionContext)
   const [close, setClose] = useState(false)
 
-  const rows = action.students.map(i => createData(i.stuName, i.email, i.batch, i.gender, i.uid))
+  const rows = action.students.map(i => createData(i.stuName, i.email, i.batch, i.city, i.gender, i.uid))
 
-  console.log("rows->", rows)
   return <div className="card" style={{ width: "90%" }}>
+    <Box m={2} textAlign="center" fontFamily="Monospace" fontWeight="fontWeightMedium" style={{ color: "#444444" }}>
+      <Typography component="h1" variant="h5">
+        Registered Student Details
+        </Typography>
+    </Box>
+    <Divider variant="middle" />
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell align="center">Email ID</TableCell>
-            <TableCell align="center">Gender</TableCell>
             <TableCell align="center">Batch</TableCell>
+            <TableCell align="center">City</TableCell>
+            <TableCell align="center">Gender</TableCell>
             <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -54,6 +64,7 @@ const DataTable = () => {
               </TableCell>
               <TableCell align="center">{row.email}</TableCell>
               <TableCell align="center">{row.batch}</TableCell>
+              <TableCell align="center">{row.city}</TableCell>
               <TableCell align="center">{row.gender}</TableCell>
               <TableCell align="center">
                 <IconButton aria-label="delete" className={classes.margin} onClick={() => action.onDelete(row.uid)}>
@@ -63,7 +74,7 @@ const DataTable = () => {
                   <EditIcon />
                 </IconButton>} position="right center" modal>
                   {close => (
-                    <Form stuName={row.stuName} email={row.email} batch={row.batch} gender={row.gender} uid={row.uid} edit setClose={close} />
+                    <Form stuName={row.stuName} email={row.email} batch={row.batch} city={row.city} gender={row.gender} uid={row.uid} edit setClose={close} />
                   )}
                 </Popup>
               </TableCell>

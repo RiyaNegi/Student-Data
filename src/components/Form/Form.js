@@ -39,7 +39,7 @@ const Form = ({ stuName, email, batch, gender, uid, edit, setClose }) => {
     else {
       action.handleStudents({ ...values, uid: uuid() })
     }
-    setValues({ stuName: "", email: '', batch: "", gender: "", check: false })
+    setValues({ stuName: '', email: '', batch: '', gender: '', check: false })
   }
 
   const handleCheck = () => {
@@ -77,7 +77,7 @@ const Form = ({ stuName, email, batch, gender, uid, edit, setClose }) => {
           <MuiSelect
             label="Select Batch Year"
             name="batch"
-            value={values.batch}
+            value={values.batch ? values.batch : ""}
             onChange={handleChange}>
             <MenuItem value="FE">FE</MenuItem>
             <MenuItem value="SE">SE</MenuItem>
@@ -89,7 +89,7 @@ const Form = ({ stuName, email, batch, gender, uid, edit, setClose }) => {
           <FormLabel>Select Gender</FormLabel>
           <MuiRadioGroup row
             name="gender"
-            value={values.gender}
+            value={values.gender ? values.gender : ""}
             onClick={handleChange}
           >
             <FormControlLabel key="01" value="Female" control={<Radio />} label="Female" />

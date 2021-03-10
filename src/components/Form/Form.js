@@ -2,18 +2,23 @@ import React, { useState, useContext } from "react"
 import Button from '@material-ui/core/Button';
 import { Checkbox, Grid, } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import { Input, TextField, FormControl, FormGroup, InputLabel, Select as MuiSelect, MenuItem, FormLabel, RadioGroup as MuiRadioGroup, FormControlLabel, Radio, Checkbox as MuiCheckbox } from '@material-ui/core';
+import { Input, TextField, FormControl, InputLabel, Select as MuiSelect, MenuItem, FormLabel, RadioGroup as MuiRadioGroup, FormControlLabel, Radio, Checkbox as MuiCheckbox } from '@material-ui/core';
 import "../style.css"
 import "./form.css"
 import { ActionContext } from "../ActionContext"
 import uuid from 'react-uuid'
 
 
-const Form = () => {
+
+const Form = ({ stuName, email, batch, gender, uid, edit, setClose }) => {
   const action = useContext(ActionContext)
 
   const [values, setValues] = useState({
-    ...action.data, check: false
+    stuName: stuName,
+    email: email,
+    batch: batch,
+    gender: gender,
+    check: false
   });
 
 
@@ -27,15 +32,20 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    action.handleStudents({ ...values, uid: uuid() })
-    setValues({})
+    if (edit) {
+      action.edit(uid, values.stuName, values.email, values.batch, values.gender)
+      setClose()
+    }
+    else {
+      action.handleStudents({ ...values, uid: uuid() })
+    }
+    setValues({ stuName: "", email: '', batch: "", gender: "", check: false })
   }
 
   const handleCheck = () => {
     setValues({ ...values, check: !values.check })
   }
 
-  console.log(values)
 
   return <div className="card">
     <Typography component="h1" variant="h5">
@@ -46,8 +56,8 @@ const Form = () => {
         <TextField
           variant="outlined"
           label="Full Name"
-          name="name"
-          value={values.name}
+          name="stuName"
+          value={values.stuName}
           onChange={handleChange}
           fullWidth
           required
@@ -80,7 +90,7 @@ const Form = () => {
           <MuiRadioGroup row
             name="gender"
             value={values.gender}
-            onChange={handleChange}
+            onClick={handleChange}
           >
             <FormControlLabel key="01" value="Female" control={<Radio />} label="Female" />
             <FormControlLabel key="02" value="Male" control={<Radio />} label="Male" />
@@ -104,7 +114,7 @@ const Form = () => {
           variant="contained"
           color="primary"
           onClick={(e) => handleSubmit(e)}
-          disabled={!values.check || !values.gender || !values.name || !values.email || !values.batch}
+          disabled={!values.check || !values.gender || !values.stuName || !values.email || !values.batch}
         >
           Register
           </Button>

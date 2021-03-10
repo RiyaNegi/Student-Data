@@ -6,7 +6,7 @@ export const ActionContext = createContext()
 let students = [
   {
     uid: "01",
-    name: "Riya Negi",
+    stuName: "Riya Negi",
     email: "abc@gmail.com",
     batch: "BE",
     gender: "Female",
@@ -22,21 +22,27 @@ export const ActionProvider = ({ children }) => {
     setStudentData(newStudent)
   }
 
-  // const edit = (id, text, parentId) => {
-  //   if (parentId === undefined) {
-  //     const newList = [...comments]
-  //     const index = newList.findIndex((x) => x.comId === id)
-  //     newList[index].text = text
-  //     setComment(newList)
-  //   }
-  // }
+  const edit = (id, stuName, email, batch, gender) => {
+    let newStudent = students.slice()
+    let newchange = {
+      stuName: stuName,
+      email: email,
+      batch: batch,
+      gender: gender,
+      uid: id
+    }
+    let index = newStudent.findIndex(i => i.uid === id)
+    newStudent[index] = newchange
+    students = newStudent
+    setStudentData(newStudent)
+    console.log("check del->", newStudent)
+  }
 
   const deleteData = (id) => {
     const newStudent = students.slice()
-    newStudent.filter(i => i.uid !== id)
-    students = newStudent
-    setStudentData(newStudent)
-    console.log("new data", students)
+    let newList = newStudent.filter(i => i.uid !== id)
+    students = newList
+    setStudentData(newList)
   }
 
   return (
@@ -44,7 +50,8 @@ export const ActionProvider = ({ children }) => {
       value={{
         handleStudents: handleStudents,
         students: studentData,
-        onDelete: deleteData
+        onDelete: deleteData,
+        edit: edit
       }}
     >
       {children}

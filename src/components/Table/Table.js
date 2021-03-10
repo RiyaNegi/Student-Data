@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useState } from "react"
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,6 +11,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { ActionContext } from "../ActionContext";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import Form from "../Form/Form"
 
 const useStyles = makeStyles({
   table: {
@@ -18,16 +21,17 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, email, batch, gender, uid) {
-  return { name, email, batch, gender, uid };
+function createData(stuName, email, batch, gender, uid) {
+  return { stuName, email, batch, gender, uid };
 }
 
 
 const DataTable = () => {
   const classes = useStyles();
   const action = useContext(ActionContext)
+  const [close, setClose] = useState(false)
 
-  const rows = action.students.map(i => createData(i.name, i.email, i.batch, i.gender, i.uid))
+  const rows = action.students.map(i => createData(i.stuName, i.email, i.batch, i.gender, i.uid))
 
   console.log("rows->", rows)
   return <div className="card" style={{ width: "90%" }}>
@@ -46,7 +50,7 @@ const DataTable = () => {
           {rows.map((row) => (
             <TableRow key={row.uid}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.stuName}
               </TableCell>
               <TableCell align="center">{row.email}</TableCell>
               <TableCell align="center">{row.batch}</TableCell>
@@ -55,9 +59,13 @@ const DataTable = () => {
                 <IconButton aria-label="delete" className={classes.margin} onClick={() => action.onDelete(row.uid)}>
                   <DeleteIcon />
                 </IconButton>
-                <IconButton aria-label="delete" className={classes.margin}>
+                <Popup trigger={<IconButton aria-label="delete" className={classes.margin}>
                   <EditIcon />
-                </IconButton>
+                </IconButton>} position="right center" modal>
+                  {close => (
+                    <Form stuName={row.stuName} email={row.email} batch={row.batch} gender={row.gender} uid={row.uid} edit setClose={close} />
+                  )}
+                </Popup>
               </TableCell>
             </TableRow>
           ))}

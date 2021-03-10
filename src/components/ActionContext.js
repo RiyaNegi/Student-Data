@@ -22,11 +22,29 @@ export const ActionProvider = ({ children }) => {
     setStudentData(newStudent)
   }
 
+  // const edit = (id, text, parentId) => {
+  //   if (parentId === undefined) {
+  //     const newList = [...comments]
+  //     const index = newList.findIndex((x) => x.comId === id)
+  //     newList[index].text = text
+  //     setComment(newList)
+  //   }
+  // }
+
+  const deleteData = (id) => {
+    const newStudent = students.slice()
+    newStudent.filter(i => i.uid !== id)
+    students = newStudent
+    setStudentData(newStudent)
+    console.log("new data", students)
+  }
+
   return (
     <ActionContext.Provider
       value={{
         handleStudents: handleStudents,
-        students: studentData
+        students: studentData,
+        onDelete: deleteData
       }}
     >
       {children}

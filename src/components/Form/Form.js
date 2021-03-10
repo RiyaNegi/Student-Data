@@ -5,8 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import { Input, TextField, FormControl, FormGroup, InputLabel, Select as MuiSelect, MenuItem, FormLabel, RadioGroup as MuiRadioGroup, FormControlLabel, Radio, Checkbox as MuiCheckbox } from '@material-ui/core';
 import "../style.css"
 import "./form.css"
-import { ActionContext } from "../ActionContext";
-
+import { ActionContext } from "../ActionContext"
+import uuid from 'react-uuid'
 
 
 const Form = () => {
@@ -27,7 +27,7 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    action.handleStudents(values)
+    action.handleStudents({ ...values, uid: uuid() })
     setValues({})
   }
 

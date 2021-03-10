@@ -18,8 +18,8 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, email, batch, gender) {
-  return { name, email, batch, gender };
+function createData(name, email, batch, gender, uid) {
+  return { name, email, batch, gender, uid };
 }
 
 
@@ -27,10 +27,7 @@ const DataTable = () => {
   const classes = useStyles();
   const action = useContext(ActionContext)
 
-  useEffect(() => {
-    document.title = `You clicked times`;
-  }, [action.students]);
-  const rows = action.students.map(i => createData(i.name, i.email, i.batch, i.gender))
+  const rows = action.students.map(i => createData(i.name, i.email, i.batch, i.gender, i.uid))
 
   console.log("rows->", rows)
   return <div className="card" style={{ width: "90%" }}>
@@ -47,7 +44,7 @@ const DataTable = () => {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.uid}>
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
@@ -55,7 +52,7 @@ const DataTable = () => {
               <TableCell align="center">{row.batch}</TableCell>
               <TableCell align="center">{row.gender}</TableCell>
               <TableCell align="center">
-                <IconButton aria-label="delete" className={classes.margin}>
+                <IconButton aria-label="delete" className={classes.margin} onClick={() => action.onDelete(row.uid)}>
                   <DeleteIcon />
                 </IconButton>
                 <IconButton aria-label="delete" className={classes.margin}>

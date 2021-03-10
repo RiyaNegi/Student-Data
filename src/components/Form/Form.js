@@ -14,12 +14,10 @@ import { cities } from "./cities"
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    margin: theme.spacing(1),
     minWidth: 400,
     margin: 15
   },
   formSelect: {
-    margin: theme.spacing(1),
     minWidth: 400,
     margin: 15,
     marginTop: -1
@@ -72,7 +70,7 @@ const Form = ({ stuName, email, batch, city, gender, uid, edit, setClose }) => {
   return <div className="card">
     <Box m={2} textAlign="center" fontFamily="Monospace" fontWeight="fontWeightMedium" style={{ color: "#444444" }}>
       <Typography component="h1" variant="h5">
-        Student Registeration Form
+        Registeration Form
         </Typography>
     </Box>
     <Divider variant="middle" />

@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,54 +7,67 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { ActionContext } from "../ActionContext";
 
 const useStyles = makeStyles({
-    table: {
-        minWidth: 450,
-    },
+  table: {
+    minWidth: 450,
+  },
 });
 
 function createData(name, email, batch, gender) {
-    return { name, email, batch, gender };
+  return { name, email, batch, gender };
 }
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-];
 
 const DataTable = () => {
-    const classes = useStyles();
-    const action = useContext(ActionContext)
+  const classes = useStyles();
+  const action = useContext(ActionContext)
 
-    return <div className="card" style={{ width: "90%" }}>
-        <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell align="right">Email ID</TableCell>
-                        <TableCell align="right">Batch</TableCell>
-                        <TableCell align="right">Gender</TableCell>
-                        <TableCell align="right">Actions</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <TableRow key={row.name}>
-                            <TableCell component="th" scope="row">
-                                {row.name}
-                            </TableCell>
-                            <TableCell align="right">{row.calories}</TableCell>
-                            <TableCell align="right">{row.fat}</TableCell>
-                            <TableCell align="right">{row.carbs}</TableCell>
-                            <TableCell align="right">{row.protein}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    </div>
+  useEffect(() => {
+    document.title = `You clicked times`;
+  }, [action.students]);
+  const rows = action.students.map(i => createData(i.name, i.email, i.batch, i.gender))
+
+  console.log("rows->", rows)
+  return <div className="card" style={{ width: "90%" }}>
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell align="center">Email ID</TableCell>
+            <TableCell align="center">Gender</TableCell>
+            <TableCell align="center">Batch</TableCell>
+            <TableCell align="center">Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow key={row.name}>
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="center">{row.email}</TableCell>
+              <TableCell align="center">{row.batch}</TableCell>
+              <TableCell align="center">{row.gender}</TableCell>
+              <TableCell align="center">
+                <IconButton aria-label="delete" className={classes.margin}>
+                  <DeleteIcon />
+                </IconButton>
+                <IconButton aria-label="delete" className={classes.margin}>
+                  <EditIcon />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </div>
 }
 
 export default DataTable

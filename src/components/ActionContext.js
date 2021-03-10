@@ -5,6 +5,7 @@ export const ActionContext = createContext()
 
 let students = [
   {
+    uid: "01",
     name: "Riya Negi",
     email: "abc@gmail.com",
     batch: "BE",
@@ -13,20 +14,19 @@ let students = [
 ]
 
 export const ActionProvider = ({ children }) => {
+  const [studentData, setStudentData] = useState(students)
   const handleStudents = (data) => {
-    console.log("handle student called")
     let newStudent = students.slice()
     newStudent.push(data)
     students = newStudent
-    console.log("new data->", students)
+    setStudentData(newStudent)
   }
-
 
   return (
     <ActionContext.Provider
       value={{
         handleStudents: handleStudents,
-        students: students
+        students: studentData
       }}
     >
       {children}

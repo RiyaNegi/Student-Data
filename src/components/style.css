@@ -1,0 +1,23 @@
+.card{
+    background-color: #ffffff;
+    width:90%;
+    padding:10px;
+    border-radius: 12px;
+    box-shadow: 2px 10px 30px -3px rgba(119,119,119,0.83);
+-webkit-box-shadow: 2px 10px 30px -3px rgba(119,119,119,0.83);
+-moz-box-shadow: 2px 10px 30px -3px rgba(119,119,119,0.83);
+  
+}
+
+.cols{
+    display: flex;
+    flex-direction: column;
+}
+
+.row{
+    display: flex;
+}
+
+.top{
+    margin-top: 10px;
+}

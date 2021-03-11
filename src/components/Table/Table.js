@@ -10,7 +10,18 @@ import 'reactjs-popup/dist/index.css';
 import Form from "../Form/Form"
 import { Box, Divider } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import styled from 'styled-components';
 
+const StyledPopup = styled(Popup)`
+&-overlay {
+  background: rgba(0, 0, 0, 0.5);
+
+}
+  &-content {
+   background:transparent;
+   border:none
+  }
+`;
 
 
 const useStyles = makeStyles({
@@ -63,13 +74,23 @@ const DataTable = () => {
                 <IconButton aria-label="delete" className={classes.margin} onClick={() => action.onDelete(row.uid)}>
                   <DeleteIcon />
                 </IconButton>
-                <Popup trigger={<IconButton aria-label="delete" className={classes.margin}>
+                <StyledPopup trigger={<IconButton aria-label="delete" className={classes.margin} nested>
                   <EditIcon />
                 </IconButton>} position="right center" modal>
                   {close => (
-                    <Form stuName={row.stuName} email={row.email} batch={row.batch} city={row.city} gender={row.gender} uid={row.uid} edit setClose={close} />
+                    <div className="modal">
+                      <Form
+                        stuName={row.stuName}
+                        email={row.email}
+                        batch={row.batch}
+                        city={row.city}
+                        gender={row.gender}
+                        uid={row.uid}
+                        edit
+                        setClose={close} />
+                    </div>
                   )}
-                </Popup>
+                </StyledPopup>
               </TableCell>
             </TableRow>
           ))}

@@ -10,6 +10,8 @@ import uuid from 'react-uuid'
 import { makeStyles } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { cities } from "./cities"
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -67,11 +69,18 @@ const Form = ({ stuName, email, batch, city, gender, uid, edit, setClose }) => {
   }
 
 
-  return <div className="card">
-    <Box m={2} textAlign="center" fontFamily="Monospace" fontWeight="fontWeightMedium" style={{ color: "#444444" }}>
-      <Typography component="h1" variant="h5">
-        Registeration Form
-        </Typography>
+  return <div className="card" style={edit && { width: "460px" }}>
+    <Box m={2} fontFamily="Monospace" fontWeight="fontWeightMedium" style={{ color: "#444444" }}>
+      <div className="row">
+        <div className="center">
+          <Typography component="h1" variant="h5">
+            {edit ? "Update Form" : "Registeration Form"}
+          </Typography>
+        </div>
+        {edit && <IconButton aria-label="close" onClick={() => setClose()}>
+          <CloseIcon />
+        </IconButton>}
+      </div>
     </Box>
     <Divider variant="middle" />
     <form className="cols center" onSubmit={handleSubmit}>
@@ -161,7 +170,7 @@ const Form = ({ stuName, email, batch, city, gender, uid, edit, setClose }) => {
             onClick={(e) => handleSubmit(e)}
             disabled={!values.check || !values.gender || !values.stuName || !values.email || !values.batch}
           >
-            Register
+            {edit ? "Save Edit" : "Register"}
           </Button>
         </Box>
       </Grid>

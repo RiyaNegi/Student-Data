@@ -1,33 +1,33 @@
 import React, { useContext, useState } from "react"
 import { makeStyles } from '@material-ui/core/styles';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead, TableRow,
+  Paper, Dialog
+} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { ActionContext } from "../ActionContext";
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import Form from "../Form/Form"
 import { Box, Divider } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import styled from 'styled-components';
-
-const StyledPopup = styled(Popup)`
-&-overlay {
-  background: rgba(0, 0, 0, 0.5);
-
-}
-  &-content {
-   background:transparent;
-   border:none
-  }
-`;
 
 
 const useStyles = makeStyles({
   table: {
     minWidth: 450,
   },
+  dialog: {
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center',
+  }
 });
 
 function createData(stuName, email, batch, city, gender, uid) {
@@ -38,10 +38,19 @@ function createData(stuName, email, batch, city, gender, uid) {
 const DataTable = () => {
   const classes = useStyles();
   const action = useContext(ActionContext)
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const rows = action.students.map(i => createData(i.stuName, i.email, i.batch, i.city, i.gender, i.uid))
 
-  return <div className="card" style={{ width: "90%" }}>
+  return <div className="card">
     <Box m={2} textAlign="center" fontFamily="Monospace" fontWeight="fontWeightMedium" style={{ color: "#444444" }}>
       <Typography component="h1" variant="h5">
         Registered Student Details
@@ -74,10 +83,11 @@ const DataTable = () => {
                 <IconButton aria-label="delete" className={classes.margin} onClick={() => action.onDelete(row.uid)}>
                   <DeleteIcon />
                 </IconButton>
-                <StyledPopup trigger={<IconButton aria-label="delete" className={classes.margin} nested>
+                <IconButton aria-label="delete" className={classes.margin} onClick={handleOpen}>
                   <EditIcon />
-                </IconButton>} position="right center" modal>
-                  {close => (
+                </IconButton>
+                <div className={classes.dialog}>
+                  <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                     <div className="modal">
                       <Form
                         stuName={row.stuName}
@@ -87,10 +97,12 @@ const DataTable = () => {
                         gender={row.gender}
                         uid={row.uid}
                         edit
-                        setClose={close} />
+                        setClose={handleClose}
+                      />
                     </div>
-                  )}
-                </StyledPopup>
+                  </Dialog>
+
+                </div>
               </TableCell>
             </TableRow>
           ))}

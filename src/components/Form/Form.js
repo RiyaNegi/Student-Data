@@ -115,7 +115,8 @@ const Form = ({ stuName, email, batch, city, gender, uid, edit, setClose }) => {
               label="Select Batch Year"
               name="batch"
               value={values.batch ? values.batch : ""}
-              onChange={handleChange}>
+              onChange={handleChange}
+            >
               <MenuItem value="FE">FE</MenuItem>
               <MenuItem value="SE">SE</MenuItem>
               <MenuItem value="TE">TE</MenuItem>

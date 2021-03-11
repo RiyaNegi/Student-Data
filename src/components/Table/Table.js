@@ -12,7 +12,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { ActionContext } from "../ActionContext";
-import 'reactjs-popup/dist/index.css';
 import Form from "../Form/Form"
 import { Box, Divider } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
